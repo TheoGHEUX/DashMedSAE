@@ -14,7 +14,6 @@ DashMed est une application web moderne qui centralise et visualise les données
 
 - FABRE Alexis
 - GHEUX Théo
-- JACOB Alexandre
 - TAHA CHAOUI Amir
 - UYSUN Ali
 
