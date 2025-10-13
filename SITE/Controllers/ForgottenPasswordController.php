@@ -11,7 +11,17 @@ final class ForgottenPasswordController
 {
     public function showForm(): void
     {
-        \View::render('auth/forgotten-password');
+        $errors = $_SESSION['errors'] ?? null;
+        $success = $_SESSION['success'] ?? null;
+        $old = $_SESSION['old'] ?? null;
+
+        unset($_SESSION['errors'], $_SESSION['success'], $_SESSION['old']);
+
+        \View::render('auth/forgotten-password', [
+            'errors' => $errors,
+            'success' => $success,
+            'old' => $old
+        ]);
     }
 
     public function submit(): void
@@ -70,8 +80,13 @@ final class ForgottenPasswordController
                 $success = 'Si un compte existe, un lien de réinitialisation a été envoyé.';
                 $old = ['email' => ''];
             }
+        } else {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['old'] = $old;
         }
 
-        \View::render('auth/forgotten-password', compact('errors', 'success', 'old'));
+        $_SESSION['success'] = $success;
+        header('Location: /forgotten-password');
+        exit;
     }
 }
