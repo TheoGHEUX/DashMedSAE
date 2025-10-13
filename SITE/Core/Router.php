@@ -30,7 +30,7 @@ final class Router
             '/connexion' => [AuthController::class, 'login', 'showLogin'],
             '/logout' => [AuthController::class, 'logout'],
             '/deconnexion' => [AuthController::class, 'logout'],
-            '/forgotten-password' => [ForgottenPasswordController::class, 'submit', 'showForm'],
+            '/forgotten_password' => [ForgottenPasswordController::class, 'submit', 'showForm'],
             '/mot-de-passe-oublie' => [ForgottenPasswordController::class, 'submit', 'showForm'],
             '/reset-password' => [ResetPasswordController::class, 'submit', 'showForm'],
         ],
