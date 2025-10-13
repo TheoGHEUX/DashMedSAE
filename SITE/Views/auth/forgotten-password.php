@@ -25,9 +25,9 @@ $pageScripts = ["/assets/script/header_responsive.js"];
 ?>
 <!doctype html>
 <html lang="fr">
-<?php include __DIR__ . '/partials/head.php'; ?>
+<?php include __DIR__ . '/../partials/head.php'; ?>
 <body>
-<?php include __DIR__ . '/partials/header.php'; ?>
+<?php include __DIR__ . '/../partials/header.php'; ?>
 
 <main class="main">
     <section class="hero">
@@ -58,6 +58,6 @@ $pageScripts = ["/assets/script/header_responsive.js"];
     </section>
 </main>
 
-<?php include __DIR__ . '/partials/footer.php'; ?>
+<?php include __DIR__ . '/../partials/footer.php'; ?>
 </body>
 </html>

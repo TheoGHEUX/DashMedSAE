@@ -11,10 +11,7 @@ final class ForgottenPasswordController
 {
     public function showForm(): void
     {
-        $errors = [];
-        $success = '';
-        $old = ['email' => ''];
-        \View::render('forgotten_password', compact('errors', 'success', 'old'));
+        \View::render('auth/forgotten-password');
     }
 
     public function submit(): void
@@ -75,6 +72,6 @@ final class ForgottenPasswordController
             }
         }
 
-        \View::render('forgotten_password', compact('errors', 'success', 'old'));
+        \View::render('auth/forgotten-password', compact('errors', 'success', 'old'));
     }
 }
