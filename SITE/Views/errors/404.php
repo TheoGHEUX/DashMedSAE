@@ -25,10 +25,10 @@ $pageTitle = "Page non trouvée - Erreur 404";
 $pageDescription = "La page que vous recherchez n'existe pas.";
 $pageStyles = $pageStyles ?? ["/assets/style/404.css"];
 $pageScripts = [];
-include __DIR__ . '/partials/head.php';
+include __DIR__ . '/../partials/head.php';
 ?>
 <body>
-<?php include __DIR__ . '/partials/header.php'; ?>
+<?php include __DIR__ . '/../partials/header.php'; ?>
 
 <main>
     <div class="error-container">
@@ -48,6 +48,6 @@ include __DIR__ . '/partials/head.php';
 
 
 
-<?php include __DIR__ . '/partials/footer.php'; ?>
+<?php include __DIR__ . '/../partials/footer.php'; ?>
 </body>
 </html>
