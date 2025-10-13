@@ -1,10 +1,21 @@
 <?php
 namespace Controllers;
 
-final class MapController
+use Core\Controller;
+
+/**
+ * MapController - Plan du site
+ *
+ * @package DashMed
+ * @version 2.0
+ */
+final class MapController extends Controller
 {
     public function show(): void
     {
-        \View::render('map');
+        $this->view('map', [
+            'pageTitle' => 'Plan du site',
+            'pageDescription' => 'Plan du site de DashMed',
+        ], 'base');
     }
 }

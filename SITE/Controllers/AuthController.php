@@ -1,142 +1,239 @@
 <?php
 namespace Controllers;
 
-use Models\User;
+use Core\Controller;
 use Core\Csrf;
 use Core\Mailer;
+use Models\User;
 
-final class AuthController
+/**
+ * AuthController - Gestion de l'authentification
+ *
+ * Gère l'inscription, la connexion et la déconnexion des utilisateurs
+ *
+ * @package DashMed
+ * @version 2.0
+ */
+final class AuthController extends Controller
 {
+    /**
+     * Affiche le formulaire d'inscription
+     */
     public function showRegister(): void
     {
-        $errors = [];
-        $success = '';
-        $old = ['name' => '', 'last_name' => '', 'email' => ''];
-        require __DIR__ . '/../Views/auth/register.php';
+        // Si déjà connecté, redirige vers le dashboard
+        $this->requireGuest();
+
+        $this->view('auth/register', [
+            'errors' => [],
+            'success' => '',
+            'old' => ['name' => '', 'last_name' => '', 'email' => ''],
+            'csrf_token' => Csrf::token(),
+        ], 'auth');
     }
 
+    /**
+     * Traite l'inscription
+     */
     public function register(): void
     {
-        $errors = [];
-        $success = '';
-        $old = [
-            'name'      => trim((string)($_POST['name'] ?? '')),
-            'last_name' => trim((string)($_POST['last_name'] ?? '')),
-            'email'     => trim((string)($_POST['email'] ?? '')),
-        ];
-        $password         = (string)($_POST['password'] ?? '');
-        $password_confirm = (string)($_POST['password_confirm'] ?? '');
-        $csrf             = (string)($_POST['csrf_token'] ?? '');
+        $this->requireGuest();
 
-        if (!Csrf::validate($csrf)) {
+        $errors = [];
+        $old = [
+            'name'      => trim($this->post('name', '')),
+            'last_name' => trim($this->post('last_name', '')),
+            'email'     => trim($this->post('email', '')),
+        ];
+
+        // Validation CSRF
+        if (!$this->validateCsrf($this->post('csrf_token', ''))) {
             $errors[] = 'Session expirée ou jeton CSRF invalide.';
         }
 
+        // Validation de l'email
         if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Adresse email invalide.';
         }
 
-        if ($password !== $password_confirm) {
-            $errors[] = 'Mots de passe différents.';
+        // Validation du nom et prénom
+        if (empty($old['name']) || strlen($old['name']) < 2) {
+            $errors[] = 'Le prénom doit contenir au moins 2 caractères.';
         }
 
-        if (
-            strlen($password) < 12 ||
-            !preg_match('/[A-Z]/', $password) ||
-            !preg_match('/[a-z]/', $password) ||
-            !preg_match('/\d/', $password) ||
-            !preg_match('/[^A-Za-z0-9]/', $password)
-        ) {
+        if (empty($old['last_name']) || strlen($old['last_name']) < 2) {
+            $errors[] = 'Le nom doit contenir au moins 2 caractères.';
+        }
+
+        // Validation du mot de passe
+        $password = $this->post('password', '');
+        $password_confirm = $this->post('password_confirm', '');
+
+        if ($password !== $password_confirm) {
+            $errors[] = 'Les mots de passe ne correspondent pas.';
+        }
+
+        if (!$this->validatePassword($password)) {
             $errors[] = 'Le mot de passe doit contenir au moins 12 caractères, avec majuscules, minuscules, chiffres et un caractère spécial.';
         }
 
+        // Vérification de l'existence de l'email
         if (!$errors && User::emailExists($old['email'])) {
             $errors[] = 'Un compte existe déjà avec cette adresse email.';
         }
 
-        if (!$errors) {
+        // Création du compte
+        if (empty($errors)) {
             $hash = password_hash($password, PASSWORD_DEFAULT);
+
             try {
                 if (User::create($old['name'], $old['last_name'], $old['email'], $hash)) {
-                    // Envoi de mail (ne bloque pas si échec normalement...)
+                    // Envoi de l'email de bienvenue
                     $mailSent = Mailer::sendRegistrationEmail($old['email'], $old['name']);
-                    $success = $mailSent
-                        ? 'Compte créé !!! Un email de confirmation a été envoyé'
-                        : 'Compte créé. (Attention: le mail de bienvenue n’a pas pu être envoyé.)';
-                    $old = ['name' => '', 'email' => ''];
+
+                    $this->setFlash('success', $mailSent
+                        ? 'Compte créé avec succès ! Un email de confirmation a été envoyé.'
+                        : 'Compte créé. (L\'email de bienvenue n\'a pas pu être envoyé.)');
+
+                    // Redirection vers la page de connexion
+                    $this->redirect('/login');
+                    return;
                 } else {
-                    $errors[] = 'Insertion échouée.';
+                    $errors[] = 'Une erreur est survenue lors de la création du compte.';
                 }
             } catch (\Throwable $e) {
-                $errors[] = 'Erreur base.';
+                error_log('Registration error: ' . $e->getMessage());
+                $errors[] = 'Une erreur est survenue. Veuillez réessayer.';
             }
         }
 
-        require __DIR__ . '/../Views/auth/register.php';
+        // Affichage du formulaire avec les erreurs
+        $this->view('auth/register', [
+            'errors' => $errors,
+            'success' => '',
+            'old' => $old,
+            'csrf_token' => Csrf::token(),
+        ], 'auth');
     }
 
+    /**
+     * Affiche le formulaire de connexion
+     */
     public function showLogin(): void
     {
-        $errors = [];
-        // Affiche un message si on arrive depuis une réinitialisation réussie
-        $success = (isset($_GET['reset']) && $_GET['reset'] === '1')
-            ? 'Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.'
-            : '';
-        $old = ['email' => ''];
-        require __DIR__ . '/../Views/auth/login.php';
+        $this->requireGuest();
+
+        $success = '';
+
+        // Message de succès si redirection après réinitialisation de mot de passe
+        if ($this->get('reset') === '1') {
+            $success = 'Votre mot de passe a été réinitialisé. Vous pouvez vous connecter.';
+        }
+
+        $this->view('auth/login', [
+            'errors' => [],
+            'success' => $success,
+            'old' => ['email' => ''],
+            'csrf_token' => Csrf::token(),
+        ], 'auth');
     }
 
+    /**
+     * Traite la connexion
+     */
     public function login(): void
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) session_start();
-        $errors = [];
-        $success = '';
-        $email = strtolower(trim((string)($_POST['email'] ?? '')));
-        $password = (string)($_POST['password'] ?? '');
-        $csrf = (string)($_POST['csrf_token'] ?? '');
-        $old = ['email' => $email];
+        $this->requireGuest();
 
-        if (!Csrf::validate($csrf)) {
-            $errors[] = 'Session expirée ou jeton CSRF invalide. Veuillez réessayer.';
+        $errors = [];
+        $old = [
+            'email' => trim($this->post('email', '')),
+        ];
+        $password = $this->post('password', '');
+
+        // Validation CSRF
+        if (!$this->validateCsrf($this->post('csrf_token', ''))) {
+            $errors[] = 'Session expirée ou jeton CSRF invalide.';
         }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        // Validation de l'email
+        if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL)) {
             $errors[] = 'Adresse email invalide.';
         }
-        if ($email === '' || $password === '') {
-            $errors[] = 'Champs requis.';
+
+        // Validation du mot de passe
+        if (empty($password)) {
+            $errors[] = 'Le mot de passe est requis.';
         }
 
-        if (!$errors) {
-            $user = User::findByEmail($email);
-            if (!$user || !password_verify($password, $user['password'])) {
-                $errors[] = 'Identifiants invalides.';
-            } else {
+        // Authentification
+        if (empty($errors)) {
+            $user = User::authenticate($old['email'], $password);
+
+            if ($user) {
+                // Régénération de l'ID de session pour la sécurité
                 session_regenerate_id(true);
-                // Normalise le nom (prend name ou first_name)
-                $first = $user['name'] ?? ($user['first_name'] ?? '');
-                $last  = $user['last_name'] ?? '';
+
+                // Stockage des informations utilisateur
                 $_SESSION['user'] = [
-                    'id'    => (int)$user['user_id'],
+                    'user_id' => $user['user_id'],
                     'email' => $user['email'],
-                    'name'  => trim($first.' '.$last)
+                    'name' => $user['name'] . ' ' . $user['last_name'],
                 ];
-                header('Location: /dashboard');
-                exit;
+
+                // Redirection vers le dashboard
+                $this->redirect('/dashboard');
+                return;
+            } else {
+                $errors[] = 'Email ou mot de passe incorrect.';
             }
         }
 
-        require __DIR__ . '/../Views/auth/login.php';
+        // Affichage du formulaire avec les erreurs
+        $this->view('auth/login', [
+            'errors' => $errors,
+            'success' => '',
+            'old' => $old,
+            'csrf_token' => Csrf::token(),
+        ], 'auth');
     }
 
+    /**
+     * Déconnexion
+     */
     public function logout(): void
     {
+        // Destruction de la session
         $_SESSION = [];
+
         if (ini_get('session.use_cookies')) {
-            $p = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000, $p['path'], $p['domain'], $p['secure'], $p['httponly']);
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params['path'],
+                $params['domain'],
+                $params['secure'],
+                $params['httponly']
+            );
         }
+
         session_destroy();
-        header('Location: /login');
-        exit;
+
+        // Redirection vers l'accueil
+        $this->redirect('/');
+    }
+
+    /**
+     * Valide la force du mot de passe
+     */
+    private function validatePassword(string $password): bool
+    {
+        return strlen($password) >= 12
+            && preg_match('/[A-Z]/', $password)
+            && preg_match('/[a-z]/', $password)
+            && preg_match('/\d/', $password)
+            && preg_match('/[^A-Za-z0-9]/', $password);
     }
 }

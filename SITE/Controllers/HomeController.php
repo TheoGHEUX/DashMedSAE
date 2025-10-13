@@ -1,11 +1,26 @@
 <?php
 namespace Controllers;
 
-final class HomeController
+use Core\Controller;
+
+/**
+ * HomeController - Page d'accueil
+ *
+ * Gère l'affichage de la page d'accueil publique
+ *
+ * @package DashMed
+ * @version 2.0
+ */
+final class HomeController extends Controller
 {
+    /**
+     * Affiche la page d'accueil
+     */
     public function index(): void
     {
-        // Page d'accueil (ex-index.html) rendue via View::render('home') -> fichier Views/home.php
-        \View::render('home');
+        $this->view('home', [
+            'pageTitle' => 'Accueil',
+            'pageDescription' => 'Bienvenue sur DashMed',
+        ], 'base');
     }
 }
