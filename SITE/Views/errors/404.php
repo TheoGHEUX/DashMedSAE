@@ -28,7 +28,7 @@ $pageScripts = [];
 include __DIR__ . '/../partials/head.php';
 ?>
 <body>
-<?php include __DIR__ . '/../partials/header.php'; ?>
+<?php include __DIR__ . '/../partials/headerPublic.php'; ?>
 
 <main>
     <div class="error-container">
