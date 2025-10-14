@@ -41,7 +41,7 @@ $csrf_token = Csrf::token();
 
 </head>
 <body>
-<?php include __DIR__ . '/partials/headerPublic.php'; ?>
+<?php include __DIR__ . '/../partials/headerPublic.php'; ?>
 <main class="main">
     <section class="hero">
         <h1>Bienvenue dans DashMed</h1>
@@ -82,6 +82,6 @@ $csrf_token = Csrf::token();
     </section>
 </main>
 
-<?php include __DIR__ . '/partials/footer.php'; ?>
+<?php include __DIR__ . '/../partials/footer.php'; ?>
 </body>
 </html>
