@@ -40,29 +40,7 @@ $csrf_token = Csrf::token();
     <link rel="icon" href="/assets/images/logo.png">
 </head>
 <body>
-<header class="topbar">
-    <div class="container">
-        <div class="brand">
-            <img class="logo" src="/assets/images/logo.png" alt="logo">
-            <span class="brand-name">DashMed</span>
-        </div>
-
-        <nav class="mainnav" aria-label="Navigation principale">
-            <a href="/">Accueil</a>
-            <a href="/map">Plan du site</a>
-            <a href="/legal-notices">Mentions légales</a>
-        </nav>
-
-        <a href="/login" class="login-btn">Connexion</a>
-
-        <button class="burger-menu" aria-label="Menu" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
-</header>
-
+<?php include __DIR__ . '/../partials/headerPublic.php'; ?>
 <main class="main">
     <section class="hero">
         <h1>Bienvenue dans DashMed</h1>
@@ -110,10 +88,6 @@ $csrf_token = Csrf::token();
     </section>
 </main>
 
-<footer class="footer">
-    <div class="container">
-        © 2025 DashMed. Tous droits réservés
-    </div>
-</footer>
+<?php include __DIR__ . '/../partials/footer.php'; ?>
 </body>
 </html>
