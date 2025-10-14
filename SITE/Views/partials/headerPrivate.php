@@ -13,8 +13,9 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         <nav class="mainnav" aria-label="Navigation principale">
             <a href="/"<?= ($currentPath === '/' ? ' class="current"' : '') ?>>Accueil</a>
             <a href="/profile"<?= ($currentPath === '/profile' ? ' class="current"' : '') ?>>Profil</a>
-            <a href="/logout" class="login-btn">Deconnexion</a>
         </nav>
+
+       <a href="/logout" class="login-btn">Deconnexion</a>
 
 
         <!-- Burger menu pour responsive -->
