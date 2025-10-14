@@ -62,29 +62,7 @@ $activites = [
 <?php include __DIR__ . '/partials/head.php'; ?>
 
 <body>
-<header class="topbar">
-    <div class="container">
-        <div class="brand">
-            <img src="/assets/images/logo.png" alt="Logo" class="logo">
-            <span class="brand-name">DashMed</span>
-        </div>
-
-        <nav class="mainnav" aria-label="Navigation principale">
-            <a href="/dashboard" class="current">Accueil</a>
-            <a href="/profile">Profil</a>
-            <a href="/logout" class="nav-login">Déconnexion</a>
-        </nav>
-
-        <a href="/logout" class="login-btn">Déconnexion</a>
-
-        <button class="burger-menu" aria-label="Menu" aria-expanded="false">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-    </div>
-</header>
-
+<?php include __DIR__ . '/partials/headerPrivate.php'; ?>
 <main>
     <div class="container">
         <section class="grid">
