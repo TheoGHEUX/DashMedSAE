@@ -14,8 +14,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             <a href="/"<?= ($currentPath === '/' ? ' class="current"' : '') ?>>Accueil</a>
             <a href="/map"<?= ($currentPath === '/map' ? ' class="current"' : '') ?>>Plan du site</a>
             <a href="/legal-notices"<?= ($currentPath === '/legal-notices' ? ' class="current"' : '') ?>>Mentions légales</a>
-            <a href="/login" class="login-btn">Connexion</a>
         </nav>
+         <a href="/login" class="login-btn">Connexion</a>
 
 
         <!-- Burger menu pour responsive -->
