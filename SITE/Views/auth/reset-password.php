@@ -29,10 +29,10 @@ $pageDescription = "Page pour réinitialiser le mot de passe oublié et définir
 $pageStyles = ["/assets/style/forgotten_password.css"];
 $pageScripts = [];
 
-include __DIR__ . '/partials/head.php';
+include __DIR__ . '/../partials/head.php';
 ?>
 <body>
-<?php include __DIR__ . '/partials/header.php'; ?>
+<?php include __DIR__ . '/../partials/header.php'; ?>
 
 <main class="main">
     <section class="hero">
@@ -68,6 +68,6 @@ include __DIR__ . '/partials/head.php';
     </section>
 </main>
 
-<?php include __DIR__ . '/partials/footer.php'; ?>
+<?php include __DIR__ . '/../partials/footer.php'; ?>
 </body>
 </html>
