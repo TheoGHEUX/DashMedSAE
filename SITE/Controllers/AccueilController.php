@@ -4,6 +4,7 @@ namespace Controllers;
 /**
  * Contrôleur pour la page d'accueil (après connexion)
  * 
+ */
 final class AccueilController {
     /**
      * Affiche la page d'accueil pour les utilisateurs connectés
