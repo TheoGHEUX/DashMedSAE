@@ -1,8 +1,8 @@
 <?php
 /**
- * Fichier : dashboard.php
+ * Fichier : accueil.php
  *
- * Page du tableau de bord utilisateur pour l'application DashMed.
+ * Page d'accueil utilisateur pour l'application DashMed.
  * Affiche les statistiques, les activités récentes et propose des actions rapides.
  * Sécurise l'accès via session utilisateur et token CSRF.
  * Utilise les partials pour le head et le footer.
@@ -35,8 +35,8 @@ if (empty($_SESSION['user'])) {
  * @var array  $pageStyles      Liste des feuilles de style spécifiques à la page
  * @var array  $pageScripts     Liste des scripts spécifiques à la page
  */
-$pageTitle = "Tableau de bord";
-$pageDescription = "Page du dashboard accessible une fois connecter, espace pour vorir l'activité et les informations des médecins";
+$pageTitle = "Accueil";
+$pageDescription = "Page d'accueil accessible une fois connecté, espace pour voir l'activité et les informations des médecins";
 $pageStyles = [
     "/assets/style/dashboard.css"
 ];
@@ -45,7 +45,7 @@ $pageScripts = [
 ];
 
 /**
- * Activités récentes affichées sur le dashboard.
+ * Activités récentes affichées sur l'accueil.
  * 
  * @var array $activites Chaque élément est un tableau associatif avec les clés :
  *                       - 'label' : string, description de l'activité
