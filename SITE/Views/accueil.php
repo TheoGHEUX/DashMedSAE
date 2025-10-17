@@ -7,9 +7,6 @@
  * Sécurise l'accès via session utilisateur et token CSRF.
  * Utilise les partials pour le head et le footer.
  *
- * @package DashMed
- * @version 1.1
- * @author FABRE Alexis, GHEUX Théo, JACOB Alexandre, TAHA CHAOUI Amir, UYSUN Ali
  */
 
 /**
