@@ -1,4 +1,4 @@
-   <?php
+<?php
 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 ?>
 <header class="topbar">
@@ -11,7 +11,8 @@ $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
         <!-- Navigation principale -->
         <nav class="mainnav" aria-label="Navigation principale">
-            <a href="/"<?= ($currentPath === '/' ? ' class="current"' : '') ?>>Accueil</a>
+            <a href="/accueil"<?= ($currentPath === '/accueil' ? ' class="current"' : '') ?>>Accueil</a>
+            <a href="/dashboard"<?= ($currentPath === '/dashboard' ? ' class="current"' : '') ?>>Dashboard</a>
             <a href="/profile"<?= ($currentPath === '/profile' ? ' class="current"' : '') ?>>Profil</a>
         </nav>
 
