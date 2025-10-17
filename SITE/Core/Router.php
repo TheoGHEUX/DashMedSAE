@@ -1,6 +1,7 @@
 <?php
 namespace Core;
 
+use Controllers\AccueilController;
 use Controllers\AuthController;
 use Controllers\DashboardController;
 use Controllers\ForgottenPasswordController;
@@ -35,6 +36,7 @@ final class Router
             '/reset-password' => [ResetPasswordController::class, 'submit', 'showForm'],
         ],
         'protected' => [
+            '/accueil' => [AccueilController::class, 'index'],
             '/dashboard' => [DashboardController::class, 'index'],
             '/tableau-de-bord' => [DashboardController::class, 'index'],
             '/profile' => [ProfileController::class, 'show'],
@@ -61,9 +63,9 @@ final class Router
             exit;
         }
 
-        // Redirection automatique si connecté sur la page d'accueil
+        // Redirection automatique si connecté sur la page d'accueil publique
         if (($this->path === '/' || $this->path === '/index.php') && $this->isAuthenticated()) {
-            $this->redirect('/dashboard');
+            $this->redirect('/accueil');
         }
 
         // Tentative de résolution de la route
