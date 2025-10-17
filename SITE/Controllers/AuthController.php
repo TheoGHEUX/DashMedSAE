@@ -120,7 +120,7 @@ final class AuthController
                     'email' => $user['email'],
                     'name'  => trim($first.' '.$last)
                 ];
-                header('Location: /dashboard');
+                header('Location: /accueil');
                 exit;
             }
         }
