@@ -64,7 +64,7 @@ include __DIR__ . '/partials/head.php';
                 </tr>
                 </tbody>
             </table>
-            <a class="btn-delete" href="partials/s">Supprimer mon compte</a>
+            <a class="btn-delete" href="">Supprimer mon compte</a>
         </div>
     </div>
 </main>
