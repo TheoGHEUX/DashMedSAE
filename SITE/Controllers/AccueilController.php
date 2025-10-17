@@ -4,9 +4,6 @@ namespace Controllers;
 /**
  * Contrôleur pour la page d'accueil (après connexion)
  * 
- * @package DashMed
- * @author FABRE Alexis, GHEUX Théo, JACOB Alexandre, TAHA CHAOUI Amir, UYSUN Ali
- */
 final class AccueilController {
     /**
      * Affiche la page d'accueil pour les utilisateurs connectés
