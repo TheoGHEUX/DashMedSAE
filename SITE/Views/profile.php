@@ -31,7 +31,7 @@ $last  = $parts[1] ?? '';
 $pageTitle = "Profil";
 $pageDescription = "Consultez votre profil DashMed une fois connecté";
 $pageStyles = ["/assets/style/profile.css"];
-$pageScripts = ["/assets/script/header_responsive.js"];
+$pageScripts = [];
 
 include __DIR__ . '/partials/head.php';
 ?>

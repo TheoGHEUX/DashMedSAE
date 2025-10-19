@@ -32,13 +32,8 @@ if (empty($_SESSION['user'])) {
  */
 $pageTitle = "Dashboard - Statistiques et Patients";
 $pageDescription = "Tableau de bord médical avec graphiques détaillés et informations des patients";
-$pageStyles = [
-    "/assets/style/dashboard.css"
-];
-$pageScripts = [
-    "/assets/script/header_responsive.js",
-    "/assets/script/charts.js"
-];
+$pageStyles = ["/assets/style/dashboard.css"];
+$pageScripts = ["/assets/script/charts.js"];
 
 /**
  * Données exemple pour les statistiques
