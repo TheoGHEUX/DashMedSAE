@@ -20,13 +20,7 @@
 $pageTitle = "Mentions légales";
 $pageDescription = "Toutes les mentions légales de DashMed";
 $pageStyles = ["/assets/style/legal_notices.css"];
-<<<<<<< HEAD
 $pageScripts = [];
-=======
-$pageScripts = ["/assets/script/header_responsive.js"];
-
-include __DIR__ . '/partials/head.php';
->>>>>>> e4fd29acfde8ee899e7a16c70a8048f46b0d7943
 ?>
 <!doctype html>
 <html lang="fr">
