@@ -80,7 +80,7 @@ final class ForgottenPasswordController
                 $old = ['email' => ''];
             } catch (\Throwable $e) {
                 error_log(sprintf('[FORGOT] %s in %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
-                $success = 'Si un compte existe à cette adresse mail, un lien de réinitialisation a été envoyé.';
+                $success = "Si un compte existe à cette adresse mail, un lien de réinitialisation a été envoyé.\nN'oubliez pas de vérifier votre courrier indésirable.";
                 $old = ['email' => ''];
             }
         } else {
