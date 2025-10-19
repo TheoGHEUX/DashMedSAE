@@ -24,15 +24,7 @@ final class Mailer
             . '<p>À très vite,<br>L’équipe DashMed</p>'
             . '</body></html>';
 
-        //définit l’enveloppe expéditeur
-        $envelopeFrom = '-f ' . $from;
-
-        $ok = @mail($to, $subject, $body, implode("\r\n", $headers), $envelopeFrom);
-
-        // Log minimal pour si ça envoie
-        error_log(sprintf('[MAIL] to=%s from=%s subject="%s" result=%s', $to, $from, $subject, $ok ? 'OK' : 'FAIL'));
-
-        return $ok;
+        return self::send($to, $subject, $body, $headers, $from);
     }
     //envoie mail pour reset mdp
     public static function sendPasswordResetEmail(string $to, string $displayName, string $resetUrl): bool
@@ -56,6 +48,69 @@ final class Mailer
             . '<p>Si vous n’êtes pas à l’origine de cette demande, ignorez cet email ou contacter le services clients.</p>'
             . '</body></html>';
 
-        return @mail($to, $subject, $body, implode("\r\n", $headers), '-f '.$from);
+        return self::send($to, $subject, $body, $headers, $from);
+    }
+
+    /**
+     * Envoi centralisé: tente mail() avec les bons paramètres suivant l'OS.
+     * Si indisponible (cas courant sous XAMPP/Windows) ou en échec, écrit un fichier .eml dans SITE/storage/mails
+     * et retourne true pour débloquer les parcours en dev.
+     */
+    private static function send(string $to, string $subject, string $htmlBody, array $headers, string $from): bool
+    {
+        $headersStr = implode("\r\n", $headers);
+
+        // Sous Windows, le 5e paramètre (-f) n'est pas supporté
+        $isWindows = (PHP_OS_FAMILY === 'Windows');
+
+        $ok = false;
+        if ($isWindows) {
+            // Essayer sans paramètre supplémentaire
+            $ok = @mail($to, $subject, $htmlBody, $headersStr);
+        } else {
+            // Sur Unix/Linux, on peut préciser l'enveloppe expéditeur
+            $ok = @mail($to, $subject, $htmlBody, $headersStr, '-f ' . $from);
+        }
+
+        if (!$ok) {
+            // Fallback dev: écrire dans un fichier .eml
+            $fileOk = self::writeMailToFile($to, $from, $subject, $headers, $htmlBody);
+            error_log(sprintf('[MAIL][FALLBACK->FILE] to=%s from=%s subject="%s" saved=%s', $to, $from, $subject, $fileOk ? 'OK' : 'FAIL'));
+            return $fileOk; // on considère succès en dev si écrit
+        }
+
+        error_log(sprintf('[MAIL] to=%s from=%s subject="%s" result=OK', $to, $from, $subject));
+        return true;
+    }
+
+    private static function writeMailToFile(string $to, string $from, string $subject, array $headers, string $htmlBody): bool
+    {
+        // Répertoire: SITE/storage/mails
+        $baseDir = \Constant::rootDirectory() . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'mails';
+        if (!is_dir($baseDir)) {
+            @mkdir($baseDir, 0777, true);
+        }
+
+        $timestamp = date('Ymd-His');
+        $uniq = bin2hex(random_bytes(4));
+        $file = $baseDir . DIRECTORY_SEPARATOR . $timestamp . '-' . $uniq . '.eml';
+
+        // Construire un contenu EML minimal
+        $lines = [];
+        $lines[] = 'To: ' . $to;
+        $lines[] = 'From: ' . $from;
+        $lines[] = 'Subject: ' . $subject;
+        foreach ($headers as $h) {
+            // Eviter doublons simples pour From/Subject si déjà ajoutés
+            if (stripos($h, 'from:') === 0 || stripos($h, 'subject:') === 0 || stripos($h, 'to:') === 0) {
+                continue;
+            }
+            $lines[] = $h;
+        }
+        $lines[] = '';
+        $lines[] = $htmlBody;
+
+        $content = implode("\r\n", $lines);
+        return (bool) @file_put_contents($file, $content);
     }
 }

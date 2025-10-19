@@ -70,6 +70,9 @@ final class ForgottenPasswordController
                     // Nom d’affichage
                     $displayName = trim(($user['name'] ?? '') . ' ' . ($user['last_name'] ?? ''));
                     Mailer::sendPasswordResetEmail($old['email'], $displayName ?: 'Utilisateur', $resetUrl);
+                } else {
+                    // En prod on reste neutre côté UI, mais on log pour faciliter le debug
+                    error_log(sprintf('[FORGOT] Aucun utilisateur trouvé pour %s (message neutre renvoyé)', $old['email']));
                 }
 
                 // Réponse neutre

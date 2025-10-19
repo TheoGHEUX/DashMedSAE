@@ -24,7 +24,7 @@ final class Database
             } else {
                 // Local
                 $host = '127.0.0.1';
-                $db   = 'dashmed';
+                $db   = 'dashmed-site_db';
                 $user = 'root';
                 $pass = '';
             }

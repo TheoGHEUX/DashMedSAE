@@ -28,12 +28,11 @@ $pageTitle = "DashMed - Réinitialisation";
 $pageDescription = "Page pour réinitialiser le mot de passe oublié et définir un nouveau";
 $pageStyles = ["/assets/style/forgotten_password.css"];
 $pageScripts = [];
+
+include __DIR__ . '/partials/head.php';
 ?>
-<!doctype html>
-<html lang="fr">
-<?php include __DIR__ . '/../partials/head.php'; ?>
 <body>
-<?php include __DIR__ . '/../partials/header.php'; ?>
+<?php include __DIR__ . '/partials/header.php'; ?>
 
 <main class="main">
     <section class="hero">
@@ -69,6 +68,6 @@ $pageScripts = [];
     </section>
 </main>
 
-<?php include __DIR__ . '/../partials/footer.php'; ?>
+<?php include __DIR__ . '/partials/footer.php'; ?>
 </body>
 </html>

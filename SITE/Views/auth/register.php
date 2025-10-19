@@ -19,26 +19,15 @@
 
 use Core\Csrf;
 $csrf_token = Csrf::token();
+
+$pageTitle = "Inscription";
+$pageDescription = "Créez votre compte DashMed !";
+$pageStyles = ["/assets/style/authentication.css"];
+$pageScripts = [];
 ?>
 <!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Créez votre compte DashMed !">
-    <title>Inscription</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/assets/style/authentication.css" />
-    <link rel="stylesheet" href="/assets/style/footer.css" />
-    <link rel="stylesheet" href="/assets/style/header.css" />
-    <link rel="stylesheet" href="/assets/style/body_main_container.css" />
-    <script src="/assets/script/header_responsive.js" defer></script>
-    <link rel="icon" href="/assets/images/logo.png">
-</head>
+<?php include __DIR__ . '/../partials/head.php'; ?>
 <body>
 <header class="topbar">
     <div class="container">

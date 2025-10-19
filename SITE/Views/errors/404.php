@@ -20,11 +20,11 @@
 <!doctype html>
 <html lang="fr">
 <?php
-// Variables dynamiques transmises depuis le contrôleur
-$pageTitle = "Page non trouvée - Erreur 404";
-$pageDescription = "La page que vous recherchez n'existe pas.";
+// Variables dynamiques transmises depuis le contrôleur (valeurs par défaut si absentes)
+$pageTitle = $pageTitle ?? "Page non trouvée - Erreur 404";
+$pageDescription = $pageDescription ?? "La page que vous recherchez n'existe pas.";
 $pageStyles = $pageStyles ?? ["/assets/style/404.css"];
-$pageScripts = [];
+$pageScripts = $pageScripts ?? [];
 include __DIR__ . '/../partials/head.php';
 ?>
 <body>
