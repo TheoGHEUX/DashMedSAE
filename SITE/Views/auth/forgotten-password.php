@@ -35,7 +35,7 @@ $pageScripts = ["/assets/script/header_responsive.js"];
         <p class="subtitle">Entrez votre adresse email ci-dessous et vous recevrez un lien pour changer de mot de passe.</p>
 
         <?php if (!empty($success)): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($success, ENT_QUOTES, 'UTF-8') ?></div>
+            <div class="alert alert-success"><?= nl2br(htmlspecialchars($success, ENT_QUOTES, 'UTF-8')) ?></div>
         <?php endif; ?>
 
         <?php if (!empty($errors)): ?>

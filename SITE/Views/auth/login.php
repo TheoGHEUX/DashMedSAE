@@ -46,7 +46,7 @@ $pageScripts = [];
         <?php endif; ?>
 
         <?php if (!empty($success)): ?>
-            <div class="alert alert-success"><?= htmlspecialchars($success, ENT_QUOTES, 'UTF-8') ?></div>
+            <div class="alert alert-success"><?= nl2br(htmlspecialchars($success, ENT_QUOTES, 'UTF-8')) ?></div>
         <?php endif; ?>
 
         <form class="form" action="/login" method="post" autocomplete="on" novalidate>
