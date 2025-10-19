@@ -39,4 +39,25 @@ final class User
         $user = $st->fetch(PDO::FETCH_ASSOC);
         return $user ?: null;
     }
+
+    public static function findById(int $id): ?array
+    {
+        $pdo = Database::getConnection();
+        $st = $pdo->prepare('
+            SELECT user_id, name, last_name, email, password
+            FROM users
+            WHERE user_id = ?
+            LIMIT 1
+        ');
+        $st->execute([$id]);
+        $user = $st->fetch(PDO::FETCH_ASSOC);
+        return $user ?: null;
+    }
+
+    public static function updatePassword(int $id, string $hash): bool
+    {
+        $pdo = Database::getConnection();
+        $st = $pdo->prepare('UPDATE users SET password = ?, updated_at = NOW() WHERE user_id = ?');
+        return $st->execute([$hash, $id]);
+    }
 }

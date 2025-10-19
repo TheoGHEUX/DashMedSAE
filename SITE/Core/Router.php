@@ -10,6 +10,7 @@ use Controllers\LegalNoticesController;
 use Controllers\MapController;
 use Controllers\ProfileController;
 use Controllers\ResetPasswordController;
+use Controllers\ChangePasswordController;
 
 final class Router
 {
@@ -41,6 +42,8 @@ final class Router
             '/tableau-de-bord' => [DashboardController::class, 'index'],
             '/profile' => [ProfileController::class, 'show'],
             '/profil' => [ProfileController::class, 'show'],
+            '/change-password' => [ChangePasswordController::class, 'submit', 'showForm'],
+            '/changer-mot-de-passe' => [ChangePasswordController::class, 'submit', 'showForm'],
         ],
     ];
 

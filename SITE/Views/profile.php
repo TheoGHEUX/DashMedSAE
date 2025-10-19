@@ -58,8 +58,15 @@ include __DIR__ . '/partials/head.php';
                 <tr>
                     <th scope="row">Adresse email</th>
                     <td class="email-cell">
-                        <span><?= htmlspecialchars($user['email']) ?></span>
+                        <span><?= htmlspecialchars($user['email'] ?? '') ?></span>
                         <a class="btn-edit" href="">Modifier</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Mot de passe</th>
+                    <td class="email-cell">
+                        <span aria-label="Mot de passe masqué">••••••••</span>
+                        <a class="btn-edit" href="/change-password" title="Changer votre mot de passe (connexion requise)">Changer</a>
                     </td>
                 </tr>
                 </tbody>
