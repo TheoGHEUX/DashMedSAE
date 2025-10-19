@@ -16,6 +16,7 @@
  * @version 1.0
  * @author FABRE Alexis, GHEUX Théo, JACOB Alexandre, TAHA CHAOUI Amir, UYSUN Ali
  */
+<<<<<<< HEAD
 ?>
 <!doctype html>
 <html lang="fr">
@@ -26,9 +27,22 @@ $pageDescription = $pageDescription ?? "La page que vous recherchez n'existe pas
 $pageStyles = $pageStyles ?? ["/assets/style/404.css"];
 $pageScripts = $pageScripts ?? [];
 include __DIR__ . '/../partials/head.php';
+=======
+// Variables dynamiques transmises depuis le contrôleur
+$pageTitle = "Page non trouvée - Erreur 404";
+$pageDescription = "La page que vous recherchez n'existe pas.";
+$pageStyles = $pageStyles ?? ["/assets/style/404.css"];
+$pageScripts = [];
+>>>>>>> e4fd29acfde8ee899e7a16c70a8048f46b0d7943
 ?>
+<!doctype html>
+<html lang="fr">
+    
+<?php include __DIR__ . '/../partials/head.php'; ?>
+
 <body>
-<?php include __DIR__ . '/../partials/header.php'; ?>
+
+<?php include __DIR__ . '/../partials/headerPublic.php'; ?>
 
 <main>
     <div class="error-container">

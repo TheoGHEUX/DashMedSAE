@@ -24,11 +24,11 @@
 $pageTitle = $pageTitle ?? "Accueil";
 $pageDescription = $pageDescription ?? "Page d'accueil de DashMed : votre tableau de bord santé simple et moderne pour la médecine";
 $pageStyles = $pageStyles ?? ["/assets/style/index.css"];
-$pageScripts = $pageScripts ?? [];
+$pageScripts = ["/assets/script/header_responsive.js"];
 include __DIR__ . '/partials/head.php';
 ?>
 <body>
-<?php include __DIR__ . '/partials/header.php'; ?>
+<?php include __DIR__ . '/partials/headerPublic.php'; ?>
 <main>
     <section class="hero">
         <div class="container hero__inner">

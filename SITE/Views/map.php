@@ -15,12 +15,12 @@
 $pageTitle = "Plan du site";
 $pageDescription = "Plan du site de DashMed";
 $pageStyles = ["/assets/style/map.css"];
-$pageScripts = [];
+$pageScripts = ["/assets/script/header_responsive.js"];
 include __DIR__ . '/partials/head.php';
 ?>
 <body>
     
-<?php include __DIR__ . '/partials/header.php'; ?>
+<?php include __DIR__ . '/partials/headerPublic.php'; ?>
 
 <main class="content">
     <div class="container">
