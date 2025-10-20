@@ -59,7 +59,7 @@ include __DIR__ . '/partials/head.php';
                     <th scope="row">Adresse email</th>
                     <td class="email-cell">
                         <span><?= htmlspecialchars($user['email'] ?? '') ?></span>
-                        <a class="btn-edit" href="">Modifier</a>
+                        <a class="btn-edit" href="/change-mail" title="Changer votre adresse email (connexion requise)">Changer</a>
                     </td>
                 </tr>
                 <tr>
