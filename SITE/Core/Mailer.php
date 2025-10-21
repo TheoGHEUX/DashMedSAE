@@ -3,10 +3,10 @@ namespace Core;
 
 final class Mailer
 {
-    public static function sendRegistrationEmail(string $to, string $name, ?string $from = null): bool
+    public static function sendRegistrationEmail(string $to, string $name, ?string $from = null, ?string $activationUrl = null): bool
     {
         $from = $from ?: 'dashmed-site@alwaysdata.net';
-        $subject = 'Bienvenue sur DashMed';
+        $subject = $activationUrl ? 'Activez votre compte DashMed' : 'Bienvenue sur DashMed';
 
         $headers = [
             'From: DashMed <' . $from . '>',
@@ -16,10 +16,18 @@ final class Mailer
         ];
 
         $safeName = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+        $activationBlock = '';
+        if ($activationUrl) {
+            $safeUrl = htmlspecialchars($activationUrl, ENT_QUOTES, 'UTF-8');
+            $activationBlock =
+                '<p>Pour finaliser votre inscription, merci d’activer votre compte :</p>' .
+                "<p><a href=\"{$safeUrl}\">Activer mon compte</a></p>" .
+                '<p>Ce lien est valable 24 heures.</p>';
+        }
+
         $body = '<!doctype html><html><body>'
             . '<p>Bonjour ' . $safeName . ',</p>'
-            . '<p>Bienvenue sur DashMed ! Votre compte a bien été créé.</p>'
-            . '<p>Vous pouvez dès à présent vous connecter et commencer à utiliser notre application pour gérer votre tableau de bord en toute simplicité.</p>'
+            . ($activationBlock ?: '<p>Bienvenue sur DashMed ! Votre compte a bien été créé.</p><p>Vous pouvez dès à présent vous connecter et commencer à utiliser notre application pour gérer votre tableau de bord en toute simplicité.</p>')
             . '<p>Si vous n’êtes pas à l’origine de cette inscription, ignorez ce message ou contactez le support.</p>'
             . '<p>À très vite,<br>L’équipe DashMed</p>'
             . '</body></html>';

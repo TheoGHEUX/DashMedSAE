@@ -10,6 +10,7 @@ use Controllers\LegalNoticesController;
 use Controllers\MapController;
 use Controllers\ProfileController;
 use Controllers\ResetPasswordController;
+use Controllers\ActivationController;
 use Controllers\ChangePasswordController;
 use Controllers\ChangeMailController;
 
@@ -23,9 +24,12 @@ final class Router
         'public' => [
             '/' => [HomeController::class, 'index'],
             '/index.php' => [HomeController::class, 'index'],
+            '/home' => [HomeController::class, 'index'],
+            '/accueil' => [HomeController::class, 'index'],
             '/map' => [MapController::class, 'show'],
             '/legal-notices' => [LegalNoticesController::class, 'show'],
             '/mentions-legales' => [LegalNoticesController::class, 'show'],
+            '/activate' => [ActivationController::class, 'activate'],
         ],
         'auth' => [
             '/register' => [AuthController::class, 'register', 'showRegister'],

@@ -2,6 +2,7 @@
 namespace Controllers;
 
 use Models\User;
+use Models\Activation;
 use Core\Csrf;
 use Core\Mailer;
 
@@ -57,12 +58,17 @@ final class AuthController
         if (!$errors) {
             $hash = password_hash($password, PASSWORD_DEFAULT);
             try {
-                if (User::create($old['name'], $old['last_name'], $old['email'], $hash)) {
-                    // Envoi de mail (ne bloque pas si échec normalement...)
-                    $mailSent = Mailer::sendRegistrationEmail($old['email'], $old['name']);
+                $newId = User::createWithId($old['name'], $old['last_name'], $old['email'], $hash);
+                if ($newId) {
+                    // Générer un token d'activation et envoyer email
+                    $token = bin2hex(random_bytes(32));
+                    Activation::createForUser($newId, $token, 60 * 24); // 24h
+                    $base = (isset($_SERVER['HTTP_HOST']) ? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] : 'http://localhost');
+                    $activationUrl = $base . '/activate?token=' . urlencode($token);
+                    $mailSent = Mailer::sendRegistrationEmail($old['email'], $old['name'], null, $activationUrl);
                     $success = $mailSent
-                        ? 'Compte créé !!! Un email de confirmation a été envoyé'
-                        : 'Compte créé. (Attention: le mail de bienvenue n’a pas pu être envoyé.)';
+                        ? 'Compte créé. Un email d’activation vous a été envoyé. Pensez à vérifier vos spams.'
+                        : 'Compte créé. (Le mail d’activation n’a pas pu être envoyé — contactez le support.)';
                     $old = ['name' => '', 'email' => ''];
                 } else {
                     $errors[] = 'Insertion échouée.';
@@ -111,6 +117,12 @@ final class AuthController
             if (!$user || !password_verify($password, $user['password'])) {
                 $errors[] = 'Identifiants invalides.';
             } else {
+                // Vérifier activation
+                if (isset($user['is_active']) && (int)$user['is_active'] !== 1) {
+                    $errors[] = 'Votre compte n’est pas encore activé. Consultez l’email d’activation.';
+                    require __DIR__ . '/../Views/auth/login.php';
+                    return;
+                }
                 session_regenerate_id(true);
                 // Normalise le nom (prend name ou first_name)
                 $first = $user['name'] ?? ($user['first_name'] ?? '');
