@@ -74,6 +74,8 @@ final class AuthController
                     $errors[] = 'Insertion échouée.';
                 }
             } catch (\Throwable $e) {
+                // Log technique pour diagnostic (visible dans les logs PHP)
+                error_log(sprintf('[REGISTER] %s in %s:%d', $e->getMessage(), $e->getFile(), $e->getLine()));
                 $errors[] = 'Erreur base.';
             }
         }
