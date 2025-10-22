@@ -13,7 +13,7 @@ h1 {
     margin: 0 0 18px;
 }
 
-/* Grid layout: two columns on desktop for the first row, full width for the .full panel */
+/* Grid layout: two columns on desktop for the first row, full width for the .full panel. */
 .legal-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
