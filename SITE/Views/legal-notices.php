@@ -2,19 +2,6 @@
 /**
  * Fichier : legal-notices.php
  * Page des mentions légales de l'application DashMed.
- *
- * Fournit les informations réglementaires concernant l'éditeur, l'hébergement, la propriété intellectuelle,
- * la confidentialité, les cookies et la responsabilité. Utilise la structure dynamique avec head, header et footer inclus.
- *
- * Variables dynamiques :
- * - $pageTitle       (string)  Titre de la page
- * - $pageDescription (string)  Description pour les métadonnées
- * - $pageStyles      (array)   Styles CSS spécifiques
- * - $pageScripts     (array)   Scripts JS spécifiques
- *
- * @package DashMed
- * @version 1.0
- * @author FABRE Alexis, GHEUX Théo, JACOB Alexandre, TAHA CHAOUI Amir, UYSUN Ali
  */
 
 $pageTitle = "Mentions légales";
@@ -31,61 +18,40 @@ $pageScripts = [];
 <main class="content">
     <div class="container">
         <h1>Mentions légales</h1>
-        <p class="muted">Dernière mise à jour: 8 octobre 2025</p>
+        <p class="muted">Dernière mise à jour: 22 octobre 2025</p>
 
-        <article class="section">
-            <h2>Éditeur du site</h2>
-            <p>
-                DashMed — Site vitrine et application web de suivi de santé.<br>
-                Responsable de la publication : Équipe DashMed :<br>
-                FABRE Alexis, GHEUX Théo, JACOB Alexandre, TAHA CHAOUI Amir & UYSUN Ali <br>
-                Contact: <a href="mailto:dashmed-site@alwaysdata.net">dashmed-site@alwaysdata.net</a>
-            </p>
-        </article>
+        <section class="legal-grid">
+            <div class="panel short">
+                <h3>Politique de confidentialité</h3>
+                <p>Nous protégeons les données personnelles et de santé selon les normes en vigueur (RGPD, hébergement sécurisé). Les finalités et durées de conservation sont précisées dans notre politique complète.</p>
+                <a class="more" href="#privacy-details">En savoir plus</a>
+            </div>
 
-        <article class="section">
-            <h2>Hébergement</h2>
-            <p>
-                Hébergeur: Alwaysdata<br />
-                Téléphone: +33 1 84 16 23 40
-            </p>
-        </article>
+            <div class="panel">
+                <h3>Conditions d’utilisation</h3>
+                <p>Ces conditions définissent l'usage professionnel de la plateforme MedDash par les établissements de santé. Elles couvrent les obligations de l'établissement utilisatrice, les engagements de MedDash en matière de sécurité et les limites de responsabilité.</p>
+                <ul>
+                    <li><strong>Habilitations</strong> — gestion des accès par l'établissement ; identifiants personnels requis.</li>
+                    <li><strong>Sécurité</strong> — chiffrement, journaux d'audit et hébergement sécurisé conformes aux obligations applicables aux données de santé.</li>
+                    <li><strong>SLA</strong> — disponibilités et procédures d'incident précisées contractuellement ; maintenance planifiée annoncée à l'avance.</li>
+                    <li><strong>Responsabilités</strong> — l'établissement reste responsable du contenu clinique et des décisions médicales ; MedDash assure la plateforme et son intégrité technique.</li>
+                </ul>
+                <a class="more" href="#terms-details">Lire les détails</a>
+            </div>
 
-        <article class="section">
-            <h2>Propriété intellectuelle</h2>
-            <p>
-                L’ensemble des contenus présents sur le site (textes, graphismes, logos, icônes, images,
-                ainsi que leur mise en forme) sont, sauf mention contraire, la propriété exclusive de DashMed.
-                Toute reproduction, représentation, modification, publication, adaptation de tout ou partie des éléments
-                du site est interdite, sauf autorisation écrite préalable.
-            </p>
-        </article>
-
-        <article class="section">
-            <h2>Données personnelles</h2>
-            <p>
-                Les informations collectées via nos formulaires (inscription, connexion, mot de passe oublié)
-                sont traitées dans le cadre de la fourniture du service. Vous disposez d’un droit d’accès, de rectification,
-                d’effacement, de limitation et d’opposition au traitement des données vous concernant.
-            </p>
-        </article>
-
-        <article class="section">
-            <h2>Cookies</h2>
-            <p>
-                Le site peut déposer des cookies nécessaires au fonctionnement et à la mesure d’audience.
-                Vous pouvez configurer votre navigateur pour refuser tout ou partie des cookies.
-            </p>
-        </article>
-
-        <article class="section">
-            <h2>Responsabilité</h2>
-            <p>
-                Les informations fournies par DashMed sont données à titre indicatif et ne remplacent pas
-                l’avis d’un professionnel de santé. DashMed ne saurait être tenue responsable des dommages
-                directs ou indirects résultant de l’utilisation du site.
-            </p>
-        </article>
+            <div class="panel full long">
+                <h3>Droits des utilisateurs et gestion des données</h3>
+                <p>Les utilisateurs et les patients bénéficient de droits encadrés par le RGPD et la réglementation relative aux données de santé. Les demandes d'accès, de rectification ou d'effacement sont traitées selon des procédures définies en collaboration avec l'établissement.</p>
+                <ul>
+                    <li><strong>Droit d'accès :</strong> possibilité de demander une copie des données détenues vous concernant.</li>
+                    <li><strong>Droit de rectification :</strong> correction des données inexactes via les procédures internes de l'établissement.</li>
+                    <li><strong>Droit à l'effacement :</strong> supprimable sous réserve des obligations légales de conservation (dossiers médicaux, archives réglementaires).</li>
+                    <li><strong>Logs et traçabilité :</strong> toutes les consultations et actions sont journalisées pour garantir la traçabilité et la sécurité.</li>
+                    <li><strong>Procédure de demande :</strong> les demandes doivent être adressées au DPO ou contact indiqué par l'établissement ; MedDash assiste techniquement le traitement de ces demandes.</li>
+                </ul>
+                <a class="more" href="#rights-details">Procédure complète</a>
+            </div>
+        </section>
     </div>
 </main>
 
