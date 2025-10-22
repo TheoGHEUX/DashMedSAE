@@ -11,6 +11,8 @@ use Controllers\MapController;
 use Controllers\ProfileController;
 use Controllers\ResetPasswordController;
 use Controllers\ChangePasswordController;
+use Controllers\ChangeMailController;
+
 
 final class Router
 {
@@ -44,6 +46,8 @@ final class Router
             '/profil' => [ProfileController::class, 'show'],
             '/change-password' => [ChangePasswordController::class, 'submit', 'showForm'],
             '/changer-mot-de-passe' => [ChangePasswordController::class, 'submit', 'showForm'],
+            '/change-mail' => [ChangeMailController::class, 'submit', 'showForm'],
+            '/changer-mail' => [ChangeMailController::class, 'submit', 'showForm'],
         ],
     ];
 

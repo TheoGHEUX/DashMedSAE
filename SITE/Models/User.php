@@ -60,4 +60,13 @@ final class User
         $st = $pdo->prepare('UPDATE users SET password = ?, updated_at = NOW() WHERE user_id = ?');
         return $st->execute([$hash, $id]);
     }
+
+    public static function updateEmail(int $id, string $newEmail): bool
+    {
+        $pdo = Database::getConnection();
+        $st = $pdo->prepare('UPDATE users SET email = ?, updated_at = NOW() WHERE user_id = ?');
+        return $st->execute([strtolower(trim($newEmail)), $id]);
+    }
+
+    
 }
